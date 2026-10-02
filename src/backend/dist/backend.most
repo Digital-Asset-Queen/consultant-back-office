@@ -1,0 +1,301 @@
+// Version: 1.0.0
+type Client__488727031 =
+  {
+    address : ?Text;
+    createdAt : Time__837879871;
+    email : ?Text;
+    id : Text;
+    industry : ?Text;
+    name : Text;
+    notes : ?Text;
+    phone : ?Text;
+    primaryContactId : Text;
+    website : ?Text
+  };
+type Contact__884017471 =
+  {
+    clientId : Text;
+    createdAt : Time__837879871;
+    email : ?Text;
+    id : Text;
+    lastContactDate : ?Time__837879871;
+    name : Text;
+    notes : ?Text;
+    phone : ?Text;
+    role : ?Text
+  };
+type Contract__883849485 =
+  {
+    createdAt : Time__837879871;
+    endDate : ?Time__837879871;
+    engagementId : Text;
+    id : Text;
+    notes : ?Text;
+    renewalDate : ?Time__837879871;
+    startDate : Time__837879871;
+    status : Text
+  };
+type Data__552063367<K, V> = {var count : Nat__93962160; kvs : [var ?(K, V)]};
+type Deliverable__1057859401 =
+  {
+    createdAt : Time__837879871;
+    dueDate : ?Time__837879871;
+    engagementId : Text;
+    id : Text;
+    name : Text;
+    notes : ?Text;
+    status : Text;
+    title : Text
+  };
+type Document__57377506 =
+  {
+    category : Text;
+    clientId : ?Text;
+    createdAt : Time__837879871;
+    docType : Text;
+    engagementId : ?Text;
+    id : Text;
+    name : Text;
+    notes : ?Text;
+    status : Text;
+    title : Text;
+    updatedAt : Time__837879871
+  };
+type Engagement__931209967 =
+  {
+    clientId : Text;
+    contactId : Text;
+    createdAt : Time__837879871;
+    description : ?Text;
+    endDate : ?Time__837879871;
+    healthStatus : ?Text;
+    id : Text;
+    name : Text;
+    profileId : Text;
+    rateCardId : ?Text;
+    startDate : Time__837879871;
+    status : Text
+  };
+type Expense__1020264872 =
+  {
+    amount : Nat;
+    billable : Bool;
+    category : Text;
+    createdAt : Time__837879871;
+    date : Time__837879871;
+    description : ?Text;
+    engagementId : Text;
+    id : Text
+  };
+type Int__616954475 = Int;
+type Int__849411254 = Int__616954475;
+type Internal__455405067<K, V> =
+  {children : [var ?Node__279997185<K, V>]; data : Data__552063367<K, V>};
+type Invoice__476333655 =
+  {
+    clientId : Text;
+    contractId : Text;
+    createdAt : Time__837879871;
+    dueDate : Time__837879871;
+    engagementId : ?Text;
+    id : Text;
+    invoiceNumber : Text;
+    issueDate : Time__837879871;
+    lineItems : [LineItem__326925786];
+    notes : ?Text;
+    paymentMethod : Text;
+    paymentTerms : Text;
+    status : Text;
+    subtotalAmount : Float;
+    taxes : Float;
+    totalAmount : Float
+  };
+type Leaf__114713147<K, V> = {data : Data__552063367<K, V>};
+type LineItem__326925786 =
+  {description : Text; quantity : Float; unitPrice : Float};
+type Map__190625089<K, V> = Map__719753394<K, V>;
+type Map__246123559<K, V> = Map__190625089<K, V>;
+type Map__719753394<K, V> =
+  {var root : Node__279997185<K, V>; var size : Nat__93962160};
+type Nat__920180692 = Nat;
+type Nat__93962160 = Nat__920180692;
+type Node__279997185<K, V> =
+  {#internal : Internal__455405067<K, V>; #leaf : Leaf__114713147<K, V>};
+type Note__1055016365 =
+  {
+    clientId : Text;
+    content : Text;
+    createdAt : Time__837879871;
+    engagementId : ?Text;
+    followUp : Bool;
+    followUpDate : ?Time__837879871;
+    followUpDone : Bool;
+    id : Text;
+    isMeetingNote : Bool;
+    noteType : Text;
+    reminderDate : ?Time__837879871
+  };
+type Payment__255905356 =
+  {
+    amount : Float;
+    clientId : Text;
+    createdAt : Time__837879871;
+    date : Time__837879871;
+    id : Text;
+    invoiceId : Text;
+    method : ?Text;
+    notes : ?Text;
+    paymentDate : Time__837879871
+  };
+type PracticeProfile__245563097 =
+  {
+    address : ?Text;
+    billingAddress : Text;
+    contactId : Text;
+    createdAt : Time__837879871;
+    currency : Text;
+    email : ?Text;
+    hasExistingClients : Bool;
+    hourlyRate : ?Nat;
+    id : Text;
+    name : Text;
+    ownerName : ?Text;
+    phone : ?Text;
+    practiceName : Text;
+    timezone : ?Text;
+    workStyle : Text
+  };
+type Proposal__148405989 =
+  {
+    amount : Float;
+    clientId : Text;
+    contactId : Text;
+    createdAt : Time__837879871;
+    description : Text;
+    id : Text;
+    name : Text;
+    notes : Text;
+    status : Text
+  };
+type RateCard__898491509 =
+  {
+    createdAt : Time__837879871;
+    currency : Text;
+    dailyRate : ?Nat;
+    hourlyRate : ?Nat;
+    id : Text;
+    name : Text;
+    notes : ?Text;
+    projectRate : ?Nat;
+    serviceName : Text
+  };
+type Reminder__475999850 =
+  {
+    clientId : ?Text;
+    completed : Bool;
+    createdAt : Time__837879871;
+    done : Bool;
+    dueDate : Time__837879871;
+    engagementId : ?Text;
+    id : Text;
+    message : Text;
+    text : Text
+  };
+type TimeEntry__340557307 =
+  {
+    billable : Bool;
+    createdAt : Time__837879871;
+    date : Time__837879871;
+    deliverableId : Text;
+    description : ?Text;
+    engagementId : Text;
+    hours : Nat;
+    id : Text;
+    rateCardId : Text
+  };
+type Time__72294698 = Int__849411254;
+type Time__837879871 = Time__72294698;
+type UserRole__1073662873 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__246123559<Principal, UserRole__1073662873>
+    };
+  stable clientMap :
+    {
+      var root : Node__279997185<Text, Client__488727031>;
+      var size : Nat__93962160
+    };
+  stable contactMap :
+    {
+      var root : Node__279997185<Text, Contact__884017471>;
+      var size : Nat__93962160
+    };
+  stable contractMap :
+    {
+      var root : Node__279997185<Text, Contract__883849485>;
+      var size : Nat__93962160
+    };
+  stable deliverableMap :
+    {
+      var root : Node__279997185<Text, Deliverable__1057859401>;
+      var size : Nat__93962160
+    };
+  stable documentMap :
+    {
+      var root : Node__279997185<Text, Document__57377506>;
+      var size : Nat__93962160
+    };
+  stable engagementMap :
+    {
+      var root : Node__279997185<Text, Engagement__931209967>;
+      var size : Nat__93962160
+    };
+  stable expenseMap :
+    {
+      var root : Node__279997185<Text, Expense__1020264872>;
+      var size : Nat__93962160
+    };
+  stable invoiceCounter : {var count : Nat};
+  stable invoiceMap :
+    {
+      var root : Node__279997185<Text, Invoice__476333655>;
+      var size : Nat__93962160
+    };
+  stable noteMap :
+    {
+      var root : Node__279997185<Text, Note__1055016365>;
+      var size : Nat__93962160
+    };
+  stable paymentMap :
+    {
+      var root : Node__279997185<Text, Payment__255905356>;
+      var size : Nat__93962160
+    };
+  stable practiceProfileMap :
+    {
+      var root : Node__279997185<Text, PracticeProfile__245563097>;
+      var size : Nat__93962160
+    };
+  stable proposalMap :
+    {
+      var root : Node__279997185<Text, Proposal__148405989>;
+      var size : Nat__93962160
+    };
+  stable rateCardMap :
+    {
+      var root : Node__279997185<Text, RateCard__898491509>;
+      var size : Nat__93962160
+    };
+  stable reminderMap :
+    {
+      var root : Node__279997185<Text, Reminder__475999850>;
+      var size : Nat__93962160
+    };
+  stable timeEntryMap :
+    {
+      var root : Node__279997185<Text, TimeEntry__340557307>;
+      var size : Nat__93962160
+    }
+};

@@ -1,0 +1,19 @@
+{
+  "overview": "A bilingual Thai/English consultant back office for managing clients, engagements, proposals, and invoices.",
+  "features": [
+    "Switch between Thai and English instantly",
+    "All pages, forms, and labels translated",
+    "Thai-capable typography",
+    "Locale-aware dates and currency",
+    "Thai sample data"
+  ],
+  "category": "productivity",
+  "tags": [
+    "bilingual",
+    "thai",
+    "english",
+    "consulting",
+    "back-office"
+  ],
+  "last_updated": "2026-07-21T04:35:51.799Z"
+}

@@ -1,0 +1,407 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type TimeEntry = 
+ record {
+   billable: bool;
+   createdAt: Time;
+   date: Time;
+   deliverableId: text;
+   description: opt text;
+   engagementId: text;
+   hours: nat;
+   id: text;
+   rateCardId: text;
+ };
+type Time = int;
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Reminder = 
+ record {
+   clientId: opt text;
+   completed: bool;
+   createdAt: Time;
+   done: bool;
+   dueDate: Time;
+   engagementId: opt text;
+   id: text;
+   message: text;
+   "text": text;
+ };
+type RateCard = 
+ record {
+   createdAt: Time;
+   currency: text;
+   dailyRate: opt nat;
+   hourlyRate: opt nat;
+   id: text;
+   name: text;
+   notes: opt text;
+   projectRate: opt nat;
+   serviceName: text;
+ };
+type Proposal = 
+ record {
+   amount: float64;
+   clientId: text;
+   contactId: text;
+   createdAt: Time;
+   description: text;
+   id: text;
+   name: text;
+   notes: text;
+   status: text;
+ };
+type PracticeProfile = 
+ record {
+   address: opt text;
+   billingAddress: text;
+   contactId: text;
+   createdAt: Time;
+   currency: text;
+   email: opt text;
+   hasExistingClients: bool;
+   hourlyRate: opt nat;
+   id: text;
+   name: text;
+   ownerName: opt text;
+   phone: opt text;
+   practiceName: text;
+   timezone: opt text;
+   workStyle: text;
+ };
+type Payment = 
+ record {
+   amount: float64;
+   clientId: text;
+   createdAt: Time;
+   date: Time;
+   id: text;
+   invoiceId: text;
+   method: opt text;
+   notes: opt text;
+   paymentDate: Time;
+ };
+type Note = 
+ record {
+   clientId: text;
+   content: text;
+   createdAt: Time;
+   engagementId: opt text;
+   followUp: bool;
+   followUpDate: opt Time;
+   followUpDone: bool;
+   id: text;
+   isMeetingNote: bool;
+   noteType: text;
+   reminderDate: opt Time;
+ };
+type LineItem = 
+ record {
+   description: text;
+   quantity: float64;
+   unitPrice: float64;
+ };
+type Invoice = 
+ record {
+   clientId: text;
+   contractId: text;
+   createdAt: Time;
+   dueDate: Time;
+   engagementId: opt text;
+   id: text;
+   invoiceNumber: text;
+   issueDate: Time;
+   lineItems: vec LineItem;
+   notes: opt text;
+   paymentMethod: text;
+   paymentTerms: text;
+   status: text;
+   subtotalAmount: float64;
+   taxes: float64;
+   totalAmount: float64;
+ };
+type Expense = 
+ record {
+   amount: nat;
+   billable: bool;
+   category: text;
+   createdAt: Time;
+   date: Time;
+   description: opt text;
+   engagementId: text;
+   id: text;
+ };
+type Engagement = 
+ record {
+   clientId: text;
+   contactId: text;
+   createdAt: Time;
+   description: opt text;
+   endDate: opt Time;
+   healthStatus: opt text;
+   id: text;
+   name: text;
+   profileId: text;
+   rateCardId: opt text;
+   startDate: Time;
+   status: text;
+ };
+type Document = 
+ record {
+   category: text;
+   clientId: opt text;
+   createdAt: Time;
+   docType: text;
+   engagementId: opt text;
+   id: text;
+   name: text;
+   notes: opt text;
+   status: text;
+   title: text;
+   updatedAt: Time;
+ };
+type Deliverable = 
+ record {
+   createdAt: Time;
+   dueDate: opt Time;
+   engagementId: text;
+   id: text;
+   name: text;
+   notes: opt text;
+   status: text;
+   title: text;
+ };
+type Contract = 
+ record {
+   createdAt: Time;
+   endDate: opt Time;
+   engagementId: text;
+   id: text;
+   notes: opt text;
+   renewalDate: opt Time;
+   startDate: Time;
+   status: text;
+ };
+type Contact = 
+ record {
+   clientId: text;
+   createdAt: Time;
+   email: opt text;
+   id: text;
+   lastContactDate: opt Time;
+   name: text;
+   notes: opt text;
+   phone: opt text;
+   role: opt text;
+ };
+type Client = 
+ record {
+   address: opt text;
+   createdAt: Time;
+   email: opt text;
+   id: text;
+   industry: opt text;
+   name: text;
+   notes: opt text;
+   phone: opt text;
+   primaryContactId: text;
+   website: opt text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  addUpdateClient: ("record": Client) -> ();
+  addUpdateContact: ("record": Contact) -> ();
+  addUpdateDeliverable: ("record": Deliverable) -> ();
+  addUpdateDocument: (doc: Document) -> ();
+  addUpdateEngagement: ("record": Engagement) -> ();
+  addUpdateExpense: ("record": Expense) -> ();
+  addUpdateInvoice: ("record": Invoice) -> ();
+  addUpdateNote: ("record": Note) -> ();
+  addUpdatePayment: ("record": Payment) -> ();
+  addUpdatePracticeProfile: ("record": PracticeProfile) -> ();
+  addUpdateProposal: ("record": Proposal) -> ();
+  addUpdateRateCard: ("record": RateCard) -> ();
+  addUpdateReminder: ("record": Reminder) -> ();
+  addUpdateTimeEntry: ("record": TimeEntry) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  closeOutEngagement: (engagementId: text) -> ();
+  convertProposalToEngagement: (proposalId: text) -> (text);
+  createClient: ("record": Client) -> (Client);
+  createContact: ("record": Contact) -> (Contact);
+  createContract: (engagementId: text, status: text, startDate: int, endDate:
+   opt int, renewalDate: opt int, notes: opt text) -> (Contract);
+  createDeliverable: ("record": Deliverable) -> ();
+  createDocument: (doc: Document) -> ();
+  createEngagement: ("record": Engagement) -> ();
+  createExpense: ("record": Expense) -> ();
+  createInvoice: (clientId: text, engagementId: opt text, dueDate: int,
+   notes: opt text, lineItems:
+   vec record {
+         description: text;
+         quantity: float64;
+         unitPrice: float64;
+       }) -> (Invoice);
+  createNote: ("record": Note) -> ();
+  createPayment: (invoiceId: text, date: int, amount: float64, method:
+   opt text, notes: opt text) -> (Payment);
+  createProposal: (clientId: text, title: text, value: opt float64, stage:
+   text, notes: opt text) -> (Proposal);
+  createRateCard: ("record": RateCard) -> (RateCard);
+  createReminder: ("record": Reminder) -> ();
+  createTimeEntry: ("record": TimeEntry) -> ();
+  deleteClient: (id: text) -> (bool);
+  deleteContact: (id: text) -> (bool);
+  deleteContract: (id: text) -> (bool);
+  deleteDeliverable: (id: text) -> ();
+  deleteDocument: (id: text) -> ();
+  deleteEngagement: (id: text) -> ();
+  deleteExpense: (id: text) -> ();
+  deleteInvoice: (id: text) -> (bool);
+  deleteNote: (id: text) -> ();
+  deletePayment: (id: text) -> (bool);
+  deleteProposal: (id: text) -> (bool);
+  deleteRateCard: (id: text) -> (bool);
+  deleteReminder: (id: text) -> ();
+  deleteTimeEntry: (id: text) -> ();
+  execute: (qJson: text) -> (Result) query;
+  getAllClients: () -> (vec Client) query;
+  getAllContacts: () -> (vec Contact) query;
+  getAllContactsByClient: (clientId: text) -> (vec Contact) query;
+  getAllDeliverablesByEngagement: (engagementId: text) ->
+   (vec Deliverable) query;
+  getAllDocuments: () -> (vec Document) query;
+  getAllEngagements: () -> (vec Engagement) query;
+  getAllEngagementsByClient: (clientId: text) -> (vec Engagement) query;
+  getAllEngagementsByContact: (contactId: text) -> (vec Engagement) query;
+  getAllExpensesByEngagement: (engagementId: text) -> (vec Expense) query;
+  getAllInvoices: () -> (vec Invoice) query;
+  getAllInvoicesByClient: (clientId: text) -> (vec Invoice) query;
+  getAllInvoicesByEngagement: (engagementId: text) -> (vec Invoice) query;
+  getAllNotesByClient: (clientId: text) -> (vec Note) query;
+  getAllNotesByEngagement: (engagementId: text) -> (vec Note) query;
+  getAllPaymentsByClient: (clientId: text) -> (vec Payment) query;
+  getAllPaymentsByInvoice: (invoiceId: text) -> (vec Payment) query;
+  getAllPracticeProfiles: () -> (vec PracticeProfile) query;
+  getAllProposals: () -> (vec Proposal) query;
+  getAllProposalsByContact: (contactId: text) -> (vec Proposal) query;
+  getAllRateCards: () -> (vec RateCard) query;
+  getAllRemindersByEngagement: (engagementId: text) -> (vec Reminder) query;
+  getAllTimeEntriesByEngagement: (engagementId: text) ->
+   (vec TimeEntry) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getClient: (id: text) -> (opt Client) query;
+  getClients: () -> (vec Client) query;
+  getContacts: (clientId: opt text) -> (vec Contact) query;
+  getContracts: (engagementId: opt text) -> (vec Contract) query;
+  getDashboardData: () ->
+   (record {
+      activeEngagements: nat;
+      expiringContracts: nat;
+      followUpsDueThisWeek: vec Reminder;
+      followUpsDueToday: vec Reminder;
+      monthlyFinancials:
+       record {
+         totalCollected: float64;
+         totalInvoiced: float64;
+         totalOutstanding: float64;
+       };
+      overdueInvoices: vec Invoice;
+      pipelineSummary:
+       record {
+         pipelineAverageValue: float64;
+         pipelineValue: float64;
+         pipelineWinRate: nat;
+       };
+      recentActivity: vec Note;
+      unbilledTime: nat;
+    }) query;
+  getDeliverables: (engagementId: text) -> (vec Deliverable) query;
+  getDocuments: (clientId: opt text, engagementId: opt text) ->
+   (vec Document) query;
+  getEngagement: (id: text) -> (opt Engagement) query;
+  getEngagements: (clientId: opt text) -> (vec Engagement) query;
+  getExpenses: (engagementId: opt text, clientIdFilter: opt text) ->
+   (vec Expense) query;
+  getInvoice: (id: text) -> (opt Invoice) query;
+  getInvoices: (clientId: opt text, statusFilter: opt text) ->
+   (vec Invoice) query;
+  getNextInvoiceNumber: () -> (text) query;
+  getNotes: (clientId: opt text, engagementId: opt text) -> (vec Note) query;
+  getOutstandingInvoices: () -> (vec Invoice) query;
+  getPayments: (invoiceId: text) -> (vec Payment) query;
+  getPendingFollowUpNotes: () -> (vec Note) query;
+  getPracticeProfile: () -> (opt PracticeProfile) query;
+  getProposals: (clientId: opt text, stageFilter: opt text) ->
+   (vec Proposal) query;
+  getRateCards: () -> (vec RateCard) query;
+  getReminders: (doneFilter: opt bool) -> (vec Reminder) query;
+  getTimeEntries: (engagementId: opt text, clientIdFilter: opt text) ->
+   (vec TimeEntry) query;
+  getUpcomingReminders: () -> (vec Reminder) query;
+  getWeeklyTimesheet: (engagementId: text, weekStart: Time) ->
+   (vec TimeEntry) query;
+  initializeSeedData: () -> ();
+  isCallerAdmin: () -> (bool) query;
+  markFollowUpDone: (id: text) -> (bool);
+  markReminderDone: (id: text) -> (bool);
+  removeClient: (id: text) -> ();
+  removeContact: (id: text) -> ();
+  removeDeliverable: (id: text) -> ();
+  removeDocument: (id: text) -> ();
+  removeEngagement: (id: text) -> ();
+  removeExpense: (id: text) -> ();
+  removeInvoice: (id: text) -> ();
+  removeNote: (id: text) -> ();
+  removePayment: (id: text) -> ();
+  removePracticeProfile: (id: text) -> ();
+  removeProposal: (id: text) -> ();
+  removeRateCard: (id: text) -> ();
+  removeReminder: (id: text) -> ();
+  removeTimeEntry: (id: text) -> ();
+  schema: () -> (text) query;
+  searchClientsContactsEngagements: (searchTerm: text) ->
+   (record {
+      clients: vec Client;
+      contacts: vec Contact;
+      engagements: vec Engagement;
+    });
+  seedSampleData: () -> (bool);
+  updateClient: (id: text, "record": Client) -> (opt Client);
+  updateContact: (id: text, "record": Contact) -> (opt Contact);
+  updateContract: (id: text, status: opt text, endDate: opt int, renewalDate:
+   opt int, notes: opt text) -> (opt Contract);
+  updateDeliverable: ("record": Deliverable) -> ();
+  updateDocument: (doc: Document) -> ();
+  updateEngagement: ("record": Engagement) -> ();
+  updateExpense: ("record": Expense) -> ();
+  updateInvoice: (id: text, status: opt text, notes: opt text, dueDate:
+   opt int) -> (opt Invoice);
+  updateNote: ("record": Note) -> ();
+  updateProposal: (id: text, title: opt text, value: opt float64, stage:
+   opt text, notes: opt text) -> (opt Proposal);
+  updateRateCard: (id: text, "record": RateCard) -> (opt RateCard);
+  updateReminder: ("record": Reminder) -> ();
+  updateTimeEntry: ("record": TimeEntry) -> ();
+  upsertPracticeProfile: ("record": PracticeProfile) -> (PracticeProfile);
+}
